@@ -40,7 +40,7 @@ jobs:
       - name: Install build tools
         run: |
           gem install kramdown-rfc
-          pip install xml2rfc
+          python -m pip install xml2rfc
 
       - name: Build drafts
         run: make all xml
