@@ -41,30 +41,8 @@ jobs:
         run: |
           mkdir -p _site
           cp -r assets _site/assets
-
-          for f in draft-*.html draft-*.txt draft-*.xml; do
-            cp "$f" "_site/$f"
-          done
-
-          {
-            echo '<!doctype html>'
-            echo '<html lang="en">'
-            echo '<head>'
-            echo '<meta charset="utf-8">'
-            echo '<title>1Password Agent Identity Spec Drafts</title>'
-            echo '<link rel="stylesheet" href="assets/1password.css">'
-            echo '<style>body{max-width:48rem;margin:3rem auto;padding:0 1rem;font-family:system-ui,sans-serif;line-height:1.5;}ul{padding-left:0;list-style:none;}li{margin:1.25rem 0;}.formats a{margin-right:0.5rem;}</style>'
-            echo '</head>'
-            echo '<body>'
-            echo '<h1>1Password Agent Identity Spec Drafts</h1>'
-            echo '<ul>'
-            for d in $(ls draft-*.html | sed 's/\.html$//' | sort -u); do
-              echo "<li><a href=\"$d.html\"><strong>$d</strong></a><div class=\"formats\"><a href=\"$d.html\">HTML</a> · <a href=\"$d.txt\">Text</a> · <a href=\"$d.xml\">XML</a></div></li>"
-            done
-            echo '</ul>'
-            echo '</body>'
-            echo '</html>'
-          } > _site/index.html
+          cp draft-*.html draft-*.txt draft-*.xml _site/
+          bash scripts/gen-index.sh > _site/index.html
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
