@@ -1,0 +1,16 @@
+<reference anchor="RFC9334" target="https://www.rfc-editor.org/info/rfc9334">
+  <front>
+    <title>Remote ATtestation procedureS (RATS) Architecture</title>
+    <author fullname="H. Birkholz" initials="H." surname="Birkholz"/>
+    <author fullname="D. Thaler" initials="D." surname="Thaler"/>
+    <author fullname="M. Richardson" initials="M." surname="Richardson"/>
+    <author fullname="N. Smith" initials="N." surname="Smith"/>
+    <author fullname="W. Pan" initials="W." surname="Pan"/>
+    <date month="January" year="2023"/>
+    <abstract>
+      <t>In network protocol exchanges, it is often useful for one end of a communication to know whether the other end is in an intended operating state. This document provides an architectural overview of the entities involved that make such tests possible through the process of generating, conveying, and evaluating evidentiary Claims. It provides a model that is neutral toward processor architectures, the content of Claims, and protocols.</t>
+    </abstract>
+  </front>
+  <seriesInfo name="RFC" value="9334"/>
+  <seriesInfo name="DOI" value="10.17487/RFC9334"/>
+</reference>

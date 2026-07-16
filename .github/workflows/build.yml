@@ -1,0 +1,103 @@
+name: Build and publish drafts
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:24.04
+    steps:
+      - name: Install runner prerequisites
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            git ca-certificates curl build-essential libssl-dev libyaml-dev zlib1g-dev
+
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@97ecb7b512899eb71ab1bf2310a624c6f1589ac6 # v1.308.0
+        with:
+          ruby-version: '3.3'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install build tools
+        run: |
+          gem install kramdown-rfc
+          pip install xml2rfc
+
+      - name: Build drafts
+        run: make all xml
+
+      - name: Stage site
+        run: |
+          mkdir -p _site
+          cp -r assets _site/assets
+
+          for f in draft-*.html draft-*.txt draft-*.xml; do
+            cp "$f" "_site/$f"
+          done
+
+          {
+            echo '<!doctype html>'
+            echo '<html lang="en">'
+            echo '<head>'
+            echo '<meta charset="utf-8">'
+            echo '<title>1Password Agent Identity Spec Drafts</title>'
+            echo '<link rel="stylesheet" href="assets/1password.css">'
+            echo '<style>body{max-width:48rem;margin:3rem auto;padding:0 1rem;font-family:system-ui,sans-serif;line-height:1.5;}ul{padding-left:0;list-style:none;}li{margin:1.25rem 0;}.formats a{margin-right:0.5rem;}</style>'
+            echo '</head>'
+            echo '<body>'
+            echo '<h1>1Password Agent Identity Spec Drafts</h1>'
+            echo '<ul>'
+            for d in $(ls draft-*.html | sed 's/\.html$//' | sort -u); do
+              echo "<li><a href=\"$d.html\"><strong>$d</strong></a><div class=\"formats\"><a href=\"$d.html\">HTML</a> · <a href=\"$d.txt\">Text</a> · <a href=\"$d.xml\">XML</a></div></li>"
+            done
+            echo '</ul>'
+            echo '</body>'
+            echo '</html>'
+          } > _site/index.html
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: drafts
+          path: |
+            draft-*.xml
+            draft-*.html
+            draft-*.txt
+
+      - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

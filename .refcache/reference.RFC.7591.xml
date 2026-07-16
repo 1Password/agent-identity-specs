@@ -1,0 +1,16 @@
+<reference anchor="RFC7591" target="https://www.rfc-editor.org/info/rfc7591">
+  <front>
+    <title>OAuth 2.0 Dynamic Client Registration Protocol</title>
+    <author fullname="J. Richer" initials="J." role="editor" surname="Richer"/>
+    <author fullname="M. Jones" initials="M." surname="Jones"/>
+    <author fullname="J. Bradley" initials="J." surname="Bradley"/>
+    <author fullname="M. Machulak" initials="M." surname="Machulak"/>
+    <author fullname="P. Hunt" initials="P." surname="Hunt"/>
+    <date month="July" year="2015"/>
+    <abstract>
+      <t>This specification defines mechanisms for dynamically registering OAuth 2.0 clients with authorization servers. Registration requests send a set of desired client metadata values to the authorization server. The resulting registration responses return a client identifier to use at the authorization server and the client metadata values registered for the client. The client can then use this registration information to communicate with the authorization server using the OAuth 2.0 protocol. This specification also defines a set of common client metadata fields and values for clients to use during registration.</t>
+    </abstract>
+  </front>
+  <seriesInfo name="RFC" value="7591"/>
+  <seriesInfo name="DOI" value="10.17487/RFC7591"/>
+</reference>

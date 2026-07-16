@@ -1,0 +1,12 @@
+# Build outputs — regenerated from the .md source by `make` / CI
+draft-*.html
+draft-*.txt
+draft-*.xml
+
+# Proprietary brand fonts — not cleared for public redistribution
+assets/fonts/
+
+# Local-only scratch
+file.txt
+.DS_Store
+.decibel/
