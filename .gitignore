@@ -3,9 +3,6 @@ draft-*.html
 draft-*.txt
 draft-*.xml
 
-# Proprietary brand fonts — not cleared for public redistribution
-assets/fonts/
-
 # Local-only scratch
 file.txt
 .DS_Store

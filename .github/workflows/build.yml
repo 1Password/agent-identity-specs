@@ -18,15 +18,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container:
-      image: ubuntu:24.04
     steps:
-      - name: Install runner prerequisites
-        run: |
-          apt-get update
-          apt-get install -y --no-install-recommends \
-            git ca-certificates curl build-essential libssl-dev libyaml-dev zlib1g-dev
-
       - uses: actions/checkout@v4
 
       - uses: ruby/setup-ruby@97ecb7b512899eb71ab1bf2310a624c6f1589ac6 # v1.308.0
@@ -93,8 +85,6 @@ jobs:
     if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
-    container:
-      image: ubuntu:24.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
