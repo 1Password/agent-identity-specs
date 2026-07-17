@@ -80,7 +80,7 @@ jobs:
 
   deploy:
     if: github.ref == 'refs/heads/main'
-    needs: build
+    needs: [build, lint]
     runs-on: ubuntu-latest
     permissions:
       pages: write
