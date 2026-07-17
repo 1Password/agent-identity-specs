@@ -8,8 +8,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: pages
@@ -31,8 +29,8 @@ jobs:
 
       - name: Install build tools
         run: |
-          gem install kramdown-rfc
-          python -m pip install xml2rfc
+          gem install kramdown-rfc -v 1.7.39
+          python -m pip install xml2rfc==3.34.0
 
       - name: Build drafts
         run: make all xml
@@ -59,10 +57,34 @@ jobs:
         with:
           path: _site
 
+  lint:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download built drafts
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: drafts
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '20'
+
+      - name: Run idnits
+        run: |
+          for f in draft-*.txt; do
+            echo "::group::idnits $f"
+            npx --yes @ietf-tools/idnits --offline "$f"
+            echo "::endgroup::"
+          done
+
   deploy:
     if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
