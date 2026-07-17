@@ -2218,7 +2218,7 @@ explicit.
 - Vendor-specific delegation identifier (dlg\_id).
   Earlier drafts of this document defined a
   custom dlg\_id JWT claim to anchor each delegation event distinctly
-  from the access token’s jti. Karl McGuiness’s review (see Acknowledgments)
+  from the access token’s jti. Karl McGuinness’s review (see Acknowledgments)
   observed that this is a custom mechanism deserving its own
   specification rather than a paragraph in a profile document. This
   revision uses the standard JWT jti and the `Txn-Token`’s txn for
@@ -2268,7 +2268,7 @@ explicit.
 
 The authors thank the following individuals for review, feedback, and prior art that materially shaped this document:
 
-Karl McGuiness for the architectural review that prompted the scope tightening reflected in this revision: specifically, the recommendation to separate the interoperable AIMS reference architecture from vendor-specific extensions, to ground the document in shipping or actively-drafted specifications, and to make the Policy Decision Point's role explicit (Section 4.5).
+Karl McGuinness for the architectural review that prompted the scope tightening reflected in this revision: specifically, the recommendation to separate the interoperable AIMS reference architecture from vendor-specific extensions, to ground the document in shipping or actively-drafted specifications, and to make the Policy Decision Point's role explicit (Section 4.5).
 
 Nick Steele (OpenAI; co-author of {{AI-AUTH}}) for substantive discussion of the AIMS model and its application to local-execution agent profiles.
 
