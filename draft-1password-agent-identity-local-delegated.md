@@ -370,7 +370,7 @@ architecture if it realizes each AIMS function as specified in the
 corresponding section, satisfies the normative requirements of the
 {{OS-Workload-Attestation}} companion (which this document references as
 the realization of the Attestation and Provisioning functions), and does
-not relax the security properties enumerated in Section 9. An
+not relax the security properties enumerated in Section 10. An
 implementation that omits a function, for example by omitting Monitoring
 or relaxing the per-issuance peer verification of
 {{OS-Workload-Attestation}} Section 4, does not conform to this profile.
@@ -810,7 +810,7 @@ trust is anchored in OS code-signing rather than hardware-rooted
 attestation.
 
 The WIB pattern addresses the binary attestation gap
-(see Gap G-7, Section 9.4) not by providing hardware-rooted attestation,
+(see Gap G-7, Section 10.4) not by providing hardware-rooted attestation,
 which is unavailable on consumer hardware, but by consolidating local
 trust in a single hardened, code-signed daemon that issues short-lived
 workload identities only to authenticated callers.
@@ -1160,7 +1160,7 @@ actor\_token presented in Token Exchange.
 The Subject MUST authenticate to the IdP using a
 phishing-resistant method prior to any delegation. Per {{NIST-63-4}}
 (finalized July 2025), the MINIMUM assurance level for delegating
-authority to an AI agent is AAL2. Synced passkeys satisfy AAL2;
+authority is AAL2. Synced passkeys satisfy AAL2;
 device-bound passkeys with hardware attestation satisfy AAL3.
 
 The RECOMMENDED flow for local agent environments
@@ -1265,7 +1265,7 @@ to a single delegated task:
 - WIB-issued SVIDs MUST have a maximum lifetime of 10
   minutes.
 - Agent delegated access tokens MUST have a maximum
-  lifetime of 10 minutes.
+  lifetime of 15 minutes.
 - `Txn-Token`s (Section 7.3) MUST have a maximum lifetime
   of 60 seconds per {{OAUTH-TXN-TOKENS}}.
 - Refresh tokens MUST NOT be issued to local agent
@@ -1413,7 +1413,7 @@ be obtained from the TTS for each upstream invocation, bounds the
 per-call replay window. The TTS’s refusal to mint a `Txn-Token` under a
 revoked or expired access token (Section 8.3) provides the equivalent of
 CAEP-mediated revocation propagation for the per-call layer. See Section
-9 for the residual risk analysis and Section 12 for the deferred
+10 for the residual risk analysis and Section 12 for the deferred
 AT-binding work.
 
 <figure anchor="fig-3">
@@ -1474,6 +1474,8 @@ Example `Txn-Token` claims:
       "exp": 1744999260,   // 60-second lifetime
       "txn": "txn:9a1b3c2d-...",
       "sub": "user:7f3a2b1c@acme.com",
+      "aud": "https://api.example.com",
+      "req_wl": "https://gateway.api.example.com",
       "actor": {
         "sub": "spiffe://acme.com/agent/example-vendor/example-agent/8f3a2b1c...",
         "type": "ai_agent"
@@ -1494,7 +1496,7 @@ Example `Txn-Token` claims:
 ## Intent Binding {#intent-binding}
 Intent Binding is the mechanism by which the `Txn-Token`
 is cryptographically anchored to the user’s original declared goal,
-preventing prompt injection attacks from expanding the agent’s actions
+reducing risk of prompt injection attacks from expanding the agent’s actions
 beyond the stated intent. In AIMS terms, intent binding is the input
 that lets the per-call Authorization decision incorporate user-declared
 semantic context, not only scope strings.
@@ -1713,7 +1715,7 @@ is no observation of whether they are doing what they are supposed to
 do, and no mechanism to react when they are not. Earlier drafts of this
 document folded monitoring concerns into other sections (a brief mention
 in Section 5.4, the audit hint in Section 7.2, the revocation discussion
-in Section 9.2.3); this revision consolidates them into a single
+in Section 8.3); this revision consolidates them into a single
 AIMS-aligned section. Correlation in this revision uses standard JWT
 claims (the access token’s jti and the `Txn-Token`’s txn) rather than a
 vendor-specific delegation identifier.
@@ -1811,7 +1813,7 @@ bands:
   through the AS’s introspection store alone. The AS MUST emit a
   Continuous Access Evaluation Profile {{CAEP}} event addressed to all
   Resource Servers in the audience set of the revoked token, containing
-  the revoked at\_jti and an event\_type of “token\_revoked.” Resource
+  the revoked at\_jti and an event\_type of “session\_revoked.” Resource
   Servers MUST consume CAEP events on a stream they configure with the
   AS at relying-party registration time and MUST honor revocation events
   within an implementation-defined latency budget. Deployments SHOULD
@@ -2121,8 +2123,7 @@ tokens or `Txn-Token`s. This is a threat to the AIMS Credentials function
 in the local trust domain. Mitigations:
 
 - Bound the exposure window via the short token
-  lifetimes of Section 10.2.2 (15-minute AT, 60-second `Txn-Token`,
-  10-minute SVID).
+  lifetimes of Section 10.2.2 (15-minute AT, 60-second Txn-Token, 10-minute SVID).
 - Apply OS-level process isolation and ASLR; enforce
   code signing on the agent binary so the WIB’s peer verification
   (Section 5.2.4) refuses to issue SVIDs to tampered or replaced agent
@@ -2217,7 +2218,7 @@ explicit.
 - Vendor-specific delegation identifier (dlg\_id).
   Earlier drafts of this document defined a
   custom dlg\_id JWT claim to anchor each delegation event distinctly
-  from the access token’s jti. Karl McGuiness’s review (see Section 13)
+  from the access token’s jti. Karl McGuiness’s review (see Acknowledgments)
   observed that this is a custom mechanism deserving its own
   specification rather than a paragraph in a profile document. This
   revision uses the standard JWT jti and the `Txn-Token`’s txn for
