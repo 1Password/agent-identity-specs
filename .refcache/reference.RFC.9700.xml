@@ -1,0 +1,16 @@
+<reference anchor="RFC9700" target="https://www.rfc-editor.org/info/rfc9700">
+  <front>
+    <title>Best Current Practice for OAuth 2.0 Security</title>
+    <author fullname="T. Lodderstedt" initials="T." surname="Lodderstedt"/>
+    <author fullname="J. Bradley" initials="J." surname="Bradley"/>
+    <author fullname="A. Labunets" initials="A." surname="Labunets"/>
+    <author fullname="D. Fett" initials="D." surname="Fett"/>
+    <date month="January" year="2025"/>
+    <abstract>
+      <t>This document describes best current security practice for OAuth 2.0. It updates and extends the threat model and security advice given in RFCs 6749, 6750, and 6819 to incorporate practical experiences gathered since OAuth 2.0 was published and covers new threats relevant due to the broader application of OAuth 2.0. Further, it deprecates some modes of operation that are deemed less secure or even insecure.</t>
+    </abstract>
+  </front>
+  <seriesInfo name="BCP" value="240"/>
+  <seriesInfo name="RFC" value="9700"/>
+  <seriesInfo name="DOI" value="10.17487/RFC9700"/>
+</reference>

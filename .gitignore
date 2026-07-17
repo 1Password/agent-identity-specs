@@ -1,0 +1,9 @@
+# Build outputs — regenerated from the .md source by `make` / CI
+draft-*.html
+draft-*.txt
+draft-*.xml
+
+# Local-only scratch
+file.txt
+.DS_Store
+.decibel/

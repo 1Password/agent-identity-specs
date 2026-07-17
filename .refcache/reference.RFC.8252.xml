@@ -1,0 +1,14 @@
+<reference anchor="RFC8252" target="https://www.rfc-editor.org/info/rfc8252">
+  <front>
+    <title>OAuth 2.0 for Native Apps</title>
+    <author fullname="W. Denniss" initials="W." surname="Denniss"/>
+    <author fullname="J. Bradley" initials="J." surname="Bradley"/>
+    <date month="October" year="2017"/>
+    <abstract>
+      <t>OAuth 2.0 authorization requests from native apps should only be made through external user-agents, primarily the user's browser. This specification details the security and usability reasons why this is the case and how native apps and authorization servers can implement this best practice.</t>
+    </abstract>
+  </front>
+  <seriesInfo name="BCP" value="212"/>
+  <seriesInfo name="RFC" value="8252"/>
+  <seriesInfo name="DOI" value="10.17487/RFC8252"/>
+</reference>
