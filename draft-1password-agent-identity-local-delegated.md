@@ -223,13 +223,11 @@ informative:
     date: 2024
   OS-Workload-Attestation:
     title: "OS-Level Workload Attestation"
-    target: https://datatracker.ietf.org/doc/draft-1password-os-level-workload-attestation/
-    seriesinfo:
-      Internet-Draft: draft-1password-os-level-workload-attestation-00
     author:
       - fullname: J. Meller
       - fullname: J. Malnick
-    date: 2026-04
+    date: false
+    ann: "Currently unpublished, coming soon."
 
 --- abstract
 
@@ -2287,6 +2285,6 @@ Acknowledgment does not imply endorsement; the named individuals reviewed materi
 
 Document series: `draft-1password-agent-identity-local-delegated-00`, Part 1 of 6
 
-Companion: draft-1password-os-level-workload-attestation-00 (AIMS Attestation + Provisioning realization)
+Companion: draft-1password-os-level-workload-attestation-00 (AIMS Attestation + Provisioning realization). Currently unpublished, coming soon.
 
 Next document: draft-1password-agent-identity-remote-delegated-00 (AIMS reference architecture for the remote-delegated profile)
