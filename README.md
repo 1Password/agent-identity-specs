@@ -76,5 +76,5 @@ This document is Part 1 of a planned series on agent identity
 architectures.
 
 It also references the companion *OS-Level Workload Attestation* draft
-(`draft-1password-os-level-workload-attestation`), published separately
-on the IETF Datatracker, for the WIB verification protocol details.
+(`draft-1password-os-level-workload-attestation`), which is currently
+unpublished and coming soon, for the WIB verification protocol details.
